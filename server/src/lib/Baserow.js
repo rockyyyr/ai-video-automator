@@ -1,4 +1,4 @@
-const { BASEROW_URL, BASEROW_TOKEN } = process.env;
+const { BASEROW_URL, BASEROW_TOKEN, BASEROW_VIDEOS_TABLE_ID, BASEROW_SCENES_TABLE_ID } = process.env;
 
 import Axios from 'axios';
 import qs from 'qs';
@@ -18,8 +18,8 @@ api.interceptors.response.use(
 const DEFAULT_FILTER_TYPE = 'equal';
 
 export const Tables = {
-    VIDEOS: 250,
-    SCENES: 268
+    VIDEOS: parseInt(BASEROW_VIDEOS_TABLE_ID),
+    SCENES: parseInt(BASEROW_SCENES_TABLE_ID)
 };
 
 const makeFilters = filters => {
