@@ -26,14 +26,15 @@ export default function CreateForm() {
     };
 
     const generateStyleOptions = [
-        { value: 'Hyper-Realistic', label: 'Hyper-Realistic' },
-        { value: 'Anime', label: 'Anime' },
-        { value: 'Stylized', label: 'Stylized' },
-        { value: 'Cartoonish', label: 'Cartoonish' },
-        { value: 'Abstract', label: 'Abstract' },
-        { value: 'Surreal', label: 'Surreal' },
-        { value: 'Vintage', label: 'Vintage' },
-        { value: 'Futuristic', label: 'Futuristic' }
+        'Hyper-Realistic',
+        'Anime',
+        'Lego',
+        'Minecraft',
+        'Hand-drawn',
+        'Chibi',
+        'Cyberpunk',
+        'Fantasy',
+        'Disney Pixar'
     ];
 
     const maleVoices = () => Object.keys(Voices.Male).map(key => (
@@ -97,8 +98,8 @@ export default function CreateForm() {
                     Generative Style
                     <select id="generativeStyle" onChange={setValue(setGenerativeStyle)} defaultValue={Defaults.GENERATIVE_STYLE} required>
                         {generateStyleOptions.map(option => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
+                            <option key={option} value={option}>
+                                {option}
                             </option>
                         ))}
                     </select>
