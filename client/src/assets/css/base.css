@@ -1,0 +1,25 @@
+.dark-text * {
+    color: #111;
+}
+
+.container-fluid {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.vLine {
+    border-left: 1px solid lightgrey
+}
+
+.carousel-img {
+    border-radius: 3px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.carousel-img-hoverable:hover {
+    transform: scale(1.45);
+}
+
+.carousel-video-hoverable:hover {
+    transform: scale(2);
+}
