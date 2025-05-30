@@ -30,7 +30,7 @@ export async function generateVideo({ topic, transcript, duration, notes, genera
         Step: 0
     });
 
-    // return runServices(video);
+    return runServices(video);
 }
 
 async function runServices(videoData) {
