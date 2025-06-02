@@ -6,6 +6,3 @@ start cmd /k "npm start"
 rem — Change to your client folder and launch "npm run client" in a new window
 cd /d "C:\Users\aaron\brain-rot-6000\client"
 start cmd /k "npm start"
-
-rem (Optional) Pause if you want this “master” console to stay open:
-pause
