@@ -1,4 +1,5 @@
 import * as ChatGPT from './ChatGPT.js';
+import * as OpenRouter from './Openrouter.js';
 
 const instructions = `
 You are an image prompt generator agent for video production. Your role is to create starting frames for a longer video by transforming script segments into visually descriptive image prompts. You will also be provided the full script for reference. Each scene will be generated in a specified artistic style, which must be factored into the prompt to ensure consistency.
@@ -52,8 +53,8 @@ function prompt(script, style, words, position) {
 export async function generateImagePrompts(script, scenes, generativeStyle, callback) {
     for (const scene of scenes) {
         const promptText = prompt(script, generativeStyle, scene['Script Segment'], scene['Segment #']);
-        const output = await ChatGPT.prompt(promptText, instructions);
-
+        // const output = await ChatGPT.prompt(promptText, instructions);
+        const output = await OpenRouter.createPrompt(instructions + promptText);
         await callback(scene, output);
     }
 }

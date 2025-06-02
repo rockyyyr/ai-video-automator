@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import Voices from '../utils/Voice';
 import * as Api from '../utils/Api';
+import { toast } from 'react-toastify';
 
-const DEFAULT_DURATION = 25;
 const Defaults = {
     DURATION: 25,
     TTS_SPEED: 1.3,
@@ -11,15 +11,23 @@ const Defaults = {
     GENERATIVE_STYLE: 'Anime'
 };
 
-export default function CreateForm() {
+export default function CreateForm({ onSubmit, captionProfiles }) {
     const [topic, setTopic] = useState('');
     const [transcript, setTranscript] = useState('');
     const [notes, setNotes] = useState('');
+    const [captionProfile, setCaptionProfile] = useState(import.meta.env.VITE_DEFAULT_CAPTION_PROFILE);
     const [duration, setDuration] = useState(Defaults.DURATION);
     const [generativeStyle, setGenerativeStyle] = useState(Defaults.GENERATIVE_STYLE);
     const [ttsVoice, setTtsVoice] = useState(Defaults.TTS_VOICE);
     const [ttsSpeed, setTtsSpeed] = useState(Defaults.TTS_SPEED);
     const [sceneLength, setSceneLength] = useState(Defaults.SCENE_LENGTH);
+
+    useState(() => {
+        if (captionProfiles && captionProfiles.length > 0) {
+            const defaultProfile = captionProfiles.find(profile => profile.profileName === 'Default');
+            setCaptionProfile(defaultProfile?.id || 'fuck you');
+        }
+    }, [captionProfiles]);
 
     const setValue = (setter) => (e) => {
         setter(e.target.value);
@@ -60,79 +68,103 @@ export default function CreateForm() {
             generativeStyle,
             ttsVoice,
             ttsSpeed,
-            sceneLength
+            sceneLength,
+            captionProfile
         };
 
         try {
             await Api.generateVideo(userInput);
-            alert('Video generation started successfully!');
+            onSubmit();
+
+            toast('Video generation started successfully!', {
+                autoClose: 5000,
+                hideProgressBar: true,
+                className: 'notification-success'
+            });
 
         } catch (error) {
             console.error('Error submitting form:', error);
-            alert('Failed to start video generation. Please try again.');
+            toast('Video generation failed!', {
+                autoClose: 5000,
+                hideProgressBar: true,
+                className: 'notification-err'
+            });
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <fieldset className="grid">
-                <label htmlFor="topic">
-                    Topic
-                    <textarea id="topic" rows={3} resizable="true" onChange={setValue(setTopic)} required={!transcript} />
-                </label>
+        <>
+            <h1>Generate Video</h1>
+            <form onSubmit={handleSubmit}>
+                <fieldset className="grid">
+                    <label htmlFor="topic">
+                        Topic
+                        <textarea id="topic" rows={3} resizable="true" onChange={setValue(setTopic)} required={!transcript} />
+                    </label>
 
-                <label htmlFor="transcript">
-                    Transcript
-                    <textarea id="transcript" rows={3} resizable="true" onChange={setValue(setTranscript)} required={!topic} />
-                </label>
+                    <label htmlFor="transcript">
+                        Transcript
+                        <textarea id="transcript" rows={3} resizable="true" onChange={setValue(setTranscript)} required={!topic} />
+                    </label>
 
-            </fieldset>
-            <fieldset>
+                </fieldset>
+                <fieldset>
 
-                <label htmlFor="notes">Notes (Optional)</label>
-                <textarea id="notes" rows={2} resizeable="true" onChange={setValue(setNotes)} />
+                    <label htmlFor="notes">Notes (Optional)</label>
+                    <textarea id="notes" rows={2} resizeable="true" onChange={setValue(setNotes)} />
 
-            </fieldset>
-            <fieldset className="grid">
-                <label htmlFor="generativeStyle">
-                    Generative Style
-                    <select id="generativeStyle" onChange={setValue(setGenerativeStyle)} defaultValue={Defaults.GENERATIVE_STYLE} required>
-                        {generateStyleOptions.map(option => (
-                            <option key={option} value={option}>
-                                {option}
-                            </option>
-                        ))}
-                    </select>
-                </label>
+                </fieldset>
+                <fieldset className="grid">
+                    <label htmlFor="generativeStyle">
+                        Generative Style
+                        <select id="generativeStyle" onChange={setValue(setGenerativeStyle)} defaultValue={Defaults.GENERATIVE_STYLE} required>
+                            {generateStyleOptions.map(option => (
+                                <option key={option} value={option}>
+                                    {option}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
 
-                <label htmlFor="ttsVoice">
-                    TTS Voice
-                    <select id="ttsVoice" defaultValue={Defaults.TTS_VOICE} onChange={setValue(setTtsVoice)} required>
-                        {maleVoices()}
-                        {femaleVoices()}
-                    </select>
-                </label>
-            </fieldset>
+                    <label htmlFor="ttsVoice">
+                        TTS Voice
+                        <select id="ttsVoice" defaultValue={Defaults.TTS_VOICE} onChange={setValue(setTtsVoice)} required>
+                            {maleVoices()}
+                            {femaleVoices()}
+                        </select>
+                    </label>
+                    <label htmlFor="captionProfile">
+                        Caption Profile
+                        <select id="captionProfile" onChange={setValue(setCaptionProfile)}>
+                            {captionProfiles.map(profile => (
+                                <option key={profile.id} value={profile.id}>
+                                    {profile.profileName}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                </fieldset>
 
-            <fieldset className="grid">
+                <fieldset className="grid">
 
-                <label htmlFor="duration">
-                    Rough Duration (in seconds)
-                    <input id="duration" type="number" defaultValue={Defaults.DURATION} onChange={setValue(setDuration)} required />
-                </label>
+                    <label htmlFor="duration">
+                        Rough Duration (in seconds)
+                        <input id="duration" type="number" defaultValue={Defaults.DURATION} onChange={setValue(setDuration)} required />
+                    </label>
 
-                <label htmlFor="ttsSpeed">
-                    TTS Speed
-                    <input id="ttsSpeed" type="number" min="0.5" max="2.0" step="0.1" defaultValue={Defaults.TTS_SPEED} onChange={setValue(setTtsSpeed)} required />
-                </label>
+                    <label htmlFor="ttsSpeed">
+                        TTS Speed
+                        <input id="ttsSpeed" type="number" min="0.5" max="2.0" step="0.1" defaultValue={Defaults.TTS_SPEED} onChange={setValue(setTtsSpeed)} required />
+                    </label>
 
-                <label htmlFor="sceneLength">
-                    Scene Length (in seconds)
-                    <input id="sceneLength" type="number" min="1" max="60" defaultValue={Defaults.SCENE_LENGTH} onChange={setValue(setSceneLength)} required />
-                </label>
+                    <label htmlFor="sceneLength">
+                        Scene Length (in seconds)
+                        <input id="sceneLength" type="number" min="1" max="60" defaultValue={Defaults.SCENE_LENGTH} onChange={setValue(setSceneLength)} required />
+                    </label>
 
-            </fieldset>
-            <button type="submit">Generate</button>
-        </form>
+                </fieldset>
+                <button type="submit">Generate</button>
+            </form>
+        </>
     );
 };

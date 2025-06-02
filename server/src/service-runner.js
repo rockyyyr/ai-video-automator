@@ -16,31 +16,36 @@ export async function restartVideo({ videoId }) {
     return runServices(video);
 }
 
-export async function generateVideo({ topic, transcript, duration, notes, generativeStyle, ttsVoice, ttsSpeed, sceneLength }) {
-    const video = await Baserow.createRow(Baserow.Tables.VIDEOS, {
-        Topic: topic,
-        Transcript: transcript,
-        Duration: parseFloat(duration),
-        Notes: notes,
-        'Scene Length': sceneLength,
-        'Generative Style': generativeStyle,
-        'TTS Voice': ttsVoice,
-        'TTS Speed': ttsSpeed,
-        'Timestamp': Date.now(),
-        Step: 0
-    });
+export async function generateVideo({ topic, transcript, duration, notes, generativeStyle, ttsVoice, ttsSpeed, sceneLength, captionProfile }, queue) {
+    console.log({ topic, transcript, duration, notes, generativeStyle, ttsVoice, ttsSpeed, sceneLength, captionProfile });
 
-    return runServices(video);
+    // const video = await Baserow.createRow(Baserow.Tables.VIDEOS, {
+    //     Topic: topic,
+    //     Transcript: transcript,
+    //     Duration: parseFloat(duration),
+    //     Notes: notes,
+    //     'Scene Length': sceneLength,
+    //     'Generative Style': generativeStyle,
+    //     'TTS Voice': ttsVoice,
+    //     'TTS Speed': ttsSpeed,
+    //     'Timestamp': Date.now(),
+    //     captionProfile: parseInt(captionProfile),
+    //     Step: 0
+    // });
+
+    // return queue(() => runServices(video));
 }
 
 async function runServices(videoData) {
     if (!videoData) {
-        throw new Error('No video provided');
+        console.error(new Error('No video data provided'));
+        return;
     }
 
     let video = { ...videoData };
 
     try {
+
         await Baserow.updateRow(Baserow.Tables.VIDEOS, video.id, {
             Error: false
         });
@@ -83,4 +88,21 @@ async function runServices(videoData) {
         }
 
     }
+}
+
+async function testQueue(video) {
+    const delays = [3000, 3000, 3000, 3000, 4000, 5000, 6000, 6000, 6000];
+
+    for (const i in delays) {
+        await wait(delays[i]);
+        console.log(`Video ${video.id} step ${parseInt(i) + 1} complete`);
+
+        await Baserow.updateRow(Baserow.Tables.VIDEOS, video.id, {
+            Step: parseInt(i) + 1
+        });
+    }
+}
+
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

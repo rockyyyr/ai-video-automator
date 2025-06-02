@@ -88,10 +88,10 @@ export async function compose({ videoUrl, audioUrl }) {
     return result?.response && result.response[0]?.file_url;
 }
 
-export async function addCaptions(videoUrl) {
+export async function addCaptions(videoUrl, settings) {
     const result = await api.post('/video/caption', {
         video_url: videoUrl,
-        settings: {
+        settings: settings || {
             line_color: "#FFFFFF",
             word_color: "#22b525",
             all_caps: true,

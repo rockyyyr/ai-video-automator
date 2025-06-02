@@ -24,3 +24,21 @@ export function getInProgressVideos() {
 export function getCompletedVideos(page, pageSize) {
     return api.get(`/video/completed?page=${page}&pageSize=${pageSize}`);
 }
+
+export function saveProfile(profile) {
+    return api.post('/settings/caption-profiles', profile);
+}
+export function updateProfile(profileId, profile) {
+    return api.patch(`/settings/caption-profiles/${profileId}`, profile);
+}
+export function getCaptionProfiles() {
+    return api.get('/settings/caption-profiles');
+}
+
+export const deleteVideo = (videoId) => {
+    return api.delete('/video/' + videoId);
+};
+
+export const deleteImage = (videoId, sceneId) => {
+    return api.post(`/image/delete`, { videoId, sceneId });
+};

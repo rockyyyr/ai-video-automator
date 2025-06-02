@@ -1,4 +1,4 @@
-const { BASEROW_URL, BASEROW_TOKEN, BASEROW_VIDEOS_TABLE_ID, BASEROW_SCENES_TABLE_ID } = process.env;
+const { BASEROW_URL, BASEROW_TOKEN, BASEROW_VIDEOS_TABLE_ID, BASEROW_SCENES_TABLE_ID, BASEROW_CAPTION_PROFILE_TABLE_ID } = process.env;
 
 import Axios from 'axios';
 import qs from 'qs';
@@ -19,7 +19,8 @@ const DEFAULT_FILTER_TYPE = 'equal';
 
 export const Tables = {
     VIDEOS: parseInt(BASEROW_VIDEOS_TABLE_ID),
-    SCENES: parseInt(BASEROW_SCENES_TABLE_ID)
+    SCENES: parseInt(BASEROW_SCENES_TABLE_ID),
+    CAPTION_PROFILES: parseInt(BASEROW_CAPTION_PROFILE_TABLE_ID)
 };
 
 const makeFilters = filters => {
@@ -54,5 +55,9 @@ export function updateRow(tableId, rowId, data) {
 
 export function deleteRow(tableId, rowId) {
     return api.delete(`/api/database/rows/table/${tableId}/${rowId}/`);
+}
+
+export function deleteBatch(tableId, rowIds) {
+    return api.delete(`/api/database/rows/table/${tableId}/batchDelete/`, { items: rowIds });
 }
 

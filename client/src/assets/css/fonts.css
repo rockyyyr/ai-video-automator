@@ -1,0 +1,430 @@
+@font-face {
+    font-family: "Arial";
+    src: url("./src/assets/fonts/ARIALBD 1.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial";
+    src: url("./src/assets/fonts/ARIALBD.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial";
+    src: url("./src/assets/fonts/ARIALBI 1.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial";
+    src: url("./src/assets/fonts/ARIALBI.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial Black";
+    src: url("./src/assets/fonts/ARIALBLACKITALIC.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial";
+    src: url("./src/assets/fonts/ARIALI 1.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial";
+    src: url("./src/assets/fonts/ARIALI.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial Light";
+    src: url("./src/assets/fonts/ARIALLGT.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial Light";
+    src: url("./src/assets/fonts/ARIALLGTITL.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial Narrow";
+    src: url("./src/assets/fonts/ARIALN.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial Narrow";
+    src: url("./src/assets/fonts/ARIALNB.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial Narrow";
+    src: url("./src/assets/fonts/ARIALNBI.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial Narrow";
+    src: url("./src/assets/fonts/ARIALNI.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial Black";
+    src: url("./src/assets/fonts/ARIBLK.TTF");
+}
+
+
+@font-face {
+    font-family: "Arial";
+    src: url("./src/assets/fonts/Arial.ttf");
+}
+
+
+@font-face {
+    font-family: "Arial CE";
+    src: url("./src/assets/fonts/ArialCE.ttf");
+}
+
+
+@font-face {
+    font-family: "Arial CE";
+    src: url("./src/assets/fonts/ArialCEBoldItalic.ttf");
+}
+
+
+@font-face {
+    font-family: "Arial CE";
+    src: url("./src/assets/fonts/ArialCEItalic.ttf");
+}
+
+
+@font-face {
+    font-family: "Arial CE MT Black";
+    src: url("./src/assets/fonts/ArialCEMTBlack.ttf");
+}
+
+
+@font-face {
+    font-family: "Arial";
+    src: url("./src/assets/fonts/ArialMdm.ttf");
+}
+
+
+@font-face {
+    font-family: "Arial";
+    src: url("./src/assets/fonts/ArialMdmItl.ttf");
+}
+
+
+@font-face {
+    font-family: "Comic Neue";
+    src: url("./src/assets/fonts/ComicNeue-Bold.ttf");
+}
+
+
+@font-face {
+    font-family: "Comic Neue";
+    src: url("./src/assets/fonts/ComicNeue-BoldItalic.ttf");
+}
+
+
+@font-face {
+    font-family: "Comic Neue";
+    src: url("./src/assets/fonts/ComicNeue-Italic.ttf");
+}
+
+
+@font-face {
+    font-family: "Comic Neue Light";
+    src: url("./src/assets/fonts/ComicNeue-Light.ttf");
+}
+
+
+@font-face {
+    font-family: "Comic Neue Light";
+    src: url("./src/assets/fonts/ComicNeue-LightItalic.ttf");
+}
+
+
+@font-face {
+    font-family: "Comic Neue";
+    src: url("./src/assets/fonts/ComicNeue-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: "DejaVu Sans";
+    src: url("./src/assets/fonts/DejaVuSans-Bold.ttf");
+}
+
+
+@font-face {
+    font-family: "DejaVu Sans";
+    src: url("./src/assets/fonts/DejaVuSans-BoldOblique.ttf");
+}
+
+
+@font-face {
+    font-family: "DejaVu Sans Light";
+    src: url("./src/assets/fonts/DejaVuSans-ExtraLight.ttf");
+}
+
+
+@font-face {
+    font-family: "DejaVu Sans";
+    src: url("./src/assets/fonts/DejaVuSans-Oblique.ttf");
+}
+
+
+@font-face {
+    font-family: "DejaVu Sans";
+    src: url("./src/assets/fonts/DejaVuSans.ttf");
+}
+
+
+@font-face {
+    font-family: "DejaVu Sans Condensed";
+    src: url("./src/assets/fonts/DejaVuSansCondensed-Bold.ttf");
+}
+
+
+@font-face {
+    font-family: "DejaVu Sans Condensed";
+    src: url("./src/assets/fonts/DejaVuSansCondensed-BoldOblique.ttf");
+}
+
+
+@font-face {
+    font-family: "DejaVu Sans Condensed";
+    src: url("./src/assets/fonts/DejaVuSansCondensed-Oblique.ttf");
+}
+
+
+@font-face {
+    font-family: "DejaVu Sans Condensed";
+    src: url("./src/assets/fonts/DejaVuSansCondensed.ttf");
+}
+
+
+@font-face {
+    font-family: "Fredericka the Great";
+    src: url("./src/assets/fonts/FrederickatheGreat-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: "Libre Baskerville";
+    src: url("./src/assets/fonts/LibreBaskerville-Bold.ttf");
+}
+
+
+@font-face {
+    font-family: "Libre Baskerville";
+    src: url("./src/assets/fonts/LibreBaskerville-Italic.ttf");
+}
+
+
+@font-face {
+    font-family: "Libre Baskerville";
+    src: url("./src/assets/fonts/LibreBaskerville-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: "Luckiest Guy";
+    src: url("./src/assets/fonts/LuckiestGuy-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: "Nanum Pen";
+    src: url("./src/assets/fonts/NanumPenScript-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: "Noto Sans Arabic";
+    src: url("./src/assets/fonts/NotoSansArabic-VariableFont_wdth,wght.ttf");
+}
+
+
+@font-face {
+    font-family: "Noto Sans TC Black";
+    src: url("./src/assets/fonts/NotoSansTC-Black.ttf");
+}
+
+
+@font-face {
+    font-family: "Noto Sans TC";
+    src: url("./src/assets/fonts/NotoSansTC-Bold.ttf");
+}
+
+
+@font-face {
+    font-family: "Noto Sans TC ExtraBold";
+    src: url("./src/assets/fonts/NotoSansTC-ExtraBold.ttf");
+}
+
+
+@font-face {
+    font-family: "Noto Sans TC ExtraLight";
+    src: url("./src/assets/fonts/NotoSansTC-ExtraLight.ttf");
+}
+
+
+@font-face {
+    font-family: "Noto Sans TC Light";
+    src: url("./src/assets/fonts/NotoSansTC-Light.ttf");
+}
+
+
+@font-face {
+    font-family: "Noto Sans TC Medium";
+    src: url("./src/assets/fonts/NotoSansTC-Medium.ttf");
+}
+
+
+@font-face {
+    font-family: "Noto Sans TC";
+    src: url("./src/assets/fonts/NotoSansTC-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: "Noto Sans TC SemiBold";
+    src: url("./src/assets/fonts/NotoSansTC-SemiBold.ttf");
+}
+
+
+@font-face {
+    font-family: "Noto Sans TC Thin";
+    src: url("./src/assets/fonts/NotoSansTC-Thin.ttf");
+}
+
+
+@font-face {
+    font-family: "Nunito ExtraLight";
+    src: url("./src/assets/fonts/Nunito-Italic-VariableFont_wght.ttf");
+}
+
+
+@font-face {
+    font-family: "Nunito ExtraLight";
+    src: url("./src/assets/fonts/Nunito-VariableFont_wght.ttf");
+}
+
+
+@font-face {
+    font-family: "Oswald";
+    src: url("./src/assets/fonts/Oswald-VariableFont_wght.ttf");
+}
+
+
+@font-face {
+    font-family: "Pacifico";
+    src: url("./src/assets/fonts/Pacifico-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: "Permanent Marker";
+    src: url("./src/assets/fonts/PermanentMarker-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto Black";
+    src: url("./src/assets/fonts/Roboto-Black.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto Black";
+    src: url("./src/assets/fonts/Roboto-BlackItalic.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto";
+    src: url("./src/assets/fonts/Roboto-Bold.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto";
+    src: url("./src/assets/fonts/Roboto-BoldItalic.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto";
+    src: url("./src/assets/fonts/Roboto-Italic.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto Light";
+    src: url("./src/assets/fonts/Roboto-Light.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto Light";
+    src: url("./src/assets/fonts/Roboto-LightItalic.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto Medium";
+    src: url("./src/assets/fonts/Roboto-Medium.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto Medium";
+    src: url("./src/assets/fonts/Roboto-MediumItalic.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto";
+    src: url("./src/assets/fonts/Roboto-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto Thin";
+    src: url("./src/assets/fonts/Roboto-Thin.ttf");
+}
+
+
+@font-face {
+    font-family: "Roboto Thin";
+    src: url("./src/assets/fonts/Roboto-ThinItalic.ttf");
+}
+
+
+@font-face {
+    font-family: "Shrikhand";
+    src: url("./src/assets/fonts/Shrikhand-Regular.ttf");
+}
+
+
+@font-face {
+    font-family: "The Bold Font";
+    src: url("./src/assets/fonts/THEBOLDFONT.ttf");
+}
+
+
+@font-face {
+    font-family: "Arial CE";
+    src: url("./src/assets/fonts/arialceb.ttf");
+}

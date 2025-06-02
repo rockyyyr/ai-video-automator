@@ -1,6 +1,4 @@
-import api from './Openrouter.js';
-
-const model = 'deepseek/deepseek-chat-v3-0324:free';
+import * as OpenRouter from './Openrouter.js';
 
 const TITLE = /(?<=\*\*Title:\*\*)[\S|\s|.]*?(?=\*\*)/g;
 const DESCRIPTION = /(?<=\*\*Description:\*\*)[\S|\s|.]*?(?=\*\*)/g;
@@ -113,20 +111,8 @@ function parseOutput(output) {
 }
 
 async function generateScript(userInput, promptFunction) {
-    const response = await api.post('/completions', {
-        model,
-        prompt: promptFunction(userInput)
-    });
-
-    if (response.error) {
-        throw new Error(response.error);
-    }
-
-    if (!response.choices || response.choices.length === 0) {
-        throw new Error('No response from OpenRouter');
-    }
-
-    const { title, description, script } = parseOutput(response.choices[0].text);
+    const response = await OpenRouter.createPrompt(promptFunction(userInput));
+    const { title, description, script } = parseOutput(response);
 
     return {
         title,
