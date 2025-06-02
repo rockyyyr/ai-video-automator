@@ -17,23 +17,21 @@ export async function restartVideo({ videoId }) {
 }
 
 export async function generateVideo({ topic, transcript, duration, notes, generativeStyle, ttsVoice, ttsSpeed, sceneLength, captionProfile }, queue) {
-    console.log({ topic, transcript, duration, notes, generativeStyle, ttsVoice, ttsSpeed, sceneLength, captionProfile });
+    const video = await Baserow.createRow(Baserow.Tables.VIDEOS, {
+        Topic: topic,
+        Transcript: transcript,
+        Duration: parseFloat(duration),
+        Notes: notes,
+        'Scene Length': sceneLength,
+        'Generative Style': generativeStyle,
+        'TTS Voice': ttsVoice,
+        'TTS Speed': ttsSpeed,
+        'Timestamp': Date.now(),
+        captionProfile: parseInt(captionProfile),
+        Step: 0
+    });
 
-    // const video = await Baserow.createRow(Baserow.Tables.VIDEOS, {
-    //     Topic: topic,
-    //     Transcript: transcript,
-    //     Duration: parseFloat(duration),
-    //     Notes: notes,
-    //     'Scene Length': sceneLength,
-    //     'Generative Style': generativeStyle,
-    //     'TTS Voice': ttsVoice,
-    //     'TTS Speed': ttsSpeed,
-    //     'Timestamp': Date.now(),
-    //     captionProfile: parseInt(captionProfile),
-    //     Step: 0
-    // });
-
-    // return queue(() => runServices(video));
+    return queue(() => runServices(video));
 }
 
 async function runServices(videoData) {
