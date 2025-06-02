@@ -8,6 +8,7 @@
         "doc": "doc"
     },
     "scripts": {
+        "start": "node main.js",
         "dev": "nodemon main.js"
     },
     "author": "",
