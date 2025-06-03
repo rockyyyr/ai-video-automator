@@ -1,430 +1,430 @@
 @font-face {
     font-family: "Arial";
-    src: url("./src/assets/fonts/ARIALBD 1.TTF");
+    src: url("../fonts/ARIALBD 1.TTF");
 }
 
 
 @font-face {
     font-family: "Arial";
-    src: url("./src/assets/fonts/ARIALBD.TTF");
+    src: url("../fonts/ARIALBD.TTF");
 }
 
 
 @font-face {
     font-family: "Arial";
-    src: url("./src/assets/fonts/ARIALBI 1.TTF");
+    src: url("../fonts/ARIALBI 1.TTF");
 }
 
 
 @font-face {
     font-family: "Arial";
-    src: url("./src/assets/fonts/ARIALBI.TTF");
+    src: url("../fonts/ARIALBI.TTF");
 }
 
 
 @font-face {
     font-family: "Arial Black";
-    src: url("./src/assets/fonts/ARIALBLACKITALIC.TTF");
+    src: url("../fonts/ARIALBLACKITALIC.TTF");
 }
 
 
 @font-face {
     font-family: "Arial";
-    src: url("./src/assets/fonts/ARIALI 1.TTF");
+    src: url("../fonts/ARIALI 1.TTF");
 }
 
 
 @font-face {
     font-family: "Arial";
-    src: url("./src/assets/fonts/ARIALI.TTF");
+    src: url("../fonts/ARIALI.TTF");
 }
 
 
 @font-face {
     font-family: "Arial Light";
-    src: url("./src/assets/fonts/ARIALLGT.TTF");
+    src: url("../fonts/ARIALLGT.TTF");
 }
 
 
 @font-face {
     font-family: "Arial Light";
-    src: url("./src/assets/fonts/ARIALLGTITL.TTF");
+    src: url("../fonts/ARIALLGTITL.TTF");
 }
 
 
 @font-face {
     font-family: "Arial Narrow";
-    src: url("./src/assets/fonts/ARIALN.TTF");
+    src: url("../fonts/ARIALN.TTF");
 }
 
 
 @font-face {
     font-family: "Arial Narrow";
-    src: url("./src/assets/fonts/ARIALNB.TTF");
+    src: url("../fonts/ARIALNB.TTF");
 }
 
 
 @font-face {
     font-family: "Arial Narrow";
-    src: url("./src/assets/fonts/ARIALNBI.TTF");
+    src: url("../fonts/ARIALNBI.TTF");
 }
 
 
 @font-face {
     font-family: "Arial Narrow";
-    src: url("./src/assets/fonts/ARIALNI.TTF");
+    src: url("../fonts/ARIALNI.TTF");
 }
 
 
 @font-face {
     font-family: "Arial Black";
-    src: url("./src/assets/fonts/ARIBLK.TTF");
+    src: url("../fonts/ARIBLK.TTF");
 }
 
 
 @font-face {
     font-family: "Arial";
-    src: url("./src/assets/fonts/Arial.ttf");
+    src: url("../fonts/Arial.ttf");
 }
 
 
 @font-face {
     font-family: "Arial CE";
-    src: url("./src/assets/fonts/ArialCE.ttf");
+    src: url("../fonts/ArialCE.ttf");
 }
 
 
 @font-face {
     font-family: "Arial CE";
-    src: url("./src/assets/fonts/ArialCEBoldItalic.ttf");
+    src: url("../fonts/ArialCEBoldItalic.ttf");
 }
 
 
 @font-face {
     font-family: "Arial CE";
-    src: url("./src/assets/fonts/ArialCEItalic.ttf");
+    src: url("../fonts/ArialCEItalic.ttf");
 }
 
 
 @font-face {
     font-family: "Arial CE MT Black";
-    src: url("./src/assets/fonts/ArialCEMTBlack.ttf");
+    src: url("../fonts/ArialCEMTBlack.ttf");
 }
 
 
 @font-face {
     font-family: "Arial";
-    src: url("./src/assets/fonts/ArialMdm.ttf");
+    src: url("../fonts/ArialMdm.ttf");
 }
 
 
 @font-face {
     font-family: "Arial";
-    src: url("./src/assets/fonts/ArialMdmItl.ttf");
+    src: url("../fonts/ArialMdmItl.ttf");
 }
 
 
 @font-face {
     font-family: "Comic Neue";
-    src: url("./src/assets/fonts/ComicNeue-Bold.ttf");
+    src: url("../fonts/ComicNeue-Bold.ttf");
 }
 
 
 @font-face {
     font-family: "Comic Neue";
-    src: url("./src/assets/fonts/ComicNeue-BoldItalic.ttf");
+    src: url("../fonts/ComicNeue-BoldItalic.ttf");
 }
 
 
 @font-face {
     font-family: "Comic Neue";
-    src: url("./src/assets/fonts/ComicNeue-Italic.ttf");
+    src: url("../fonts/ComicNeue-Italic.ttf");
 }
 
 
 @font-face {
     font-family: "Comic Neue Light";
-    src: url("./src/assets/fonts/ComicNeue-Light.ttf");
+    src: url("../fonts/ComicNeue-Light.ttf");
 }
 
 
 @font-face {
     font-family: "Comic Neue Light";
-    src: url("./src/assets/fonts/ComicNeue-LightItalic.ttf");
+    src: url("../fonts/ComicNeue-LightItalic.ttf");
 }
 
 
 @font-face {
     font-family: "Comic Neue";
-    src: url("./src/assets/fonts/ComicNeue-Regular.ttf");
+    src: url("../fonts/ComicNeue-Regular.ttf");
 }
 
 
 @font-face {
     font-family: "DejaVu Sans";
-    src: url("./src/assets/fonts/DejaVuSans-Bold.ttf");
+    src: url("../fonts/DejaVuSans-Bold.ttf");
 }
 
 
 @font-face {
     font-family: "DejaVu Sans";
-    src: url("./src/assets/fonts/DejaVuSans-BoldOblique.ttf");
+    src: url("../fonts/DejaVuSans-BoldOblique.ttf");
 }
 
 
 @font-face {
     font-family: "DejaVu Sans Light";
-    src: url("./src/assets/fonts/DejaVuSans-ExtraLight.ttf");
+    src: url("../fonts/DejaVuSans-ExtraLight.ttf");
 }
 
 
 @font-face {
     font-family: "DejaVu Sans";
-    src: url("./src/assets/fonts/DejaVuSans-Oblique.ttf");
+    src: url("../fonts/DejaVuSans-Oblique.ttf");
 }
 
 
 @font-face {
     font-family: "DejaVu Sans";
-    src: url("./src/assets/fonts/DejaVuSans.ttf");
+    src: url("../fonts/DejaVuSans.ttf");
 }
 
 
 @font-face {
     font-family: "DejaVu Sans Condensed";
-    src: url("./src/assets/fonts/DejaVuSansCondensed-Bold.ttf");
+    src: url("../fonts/DejaVuSansCondensed-Bold.ttf");
 }
 
 
 @font-face {
     font-family: "DejaVu Sans Condensed";
-    src: url("./src/assets/fonts/DejaVuSansCondensed-BoldOblique.ttf");
+    src: url("../fonts/DejaVuSansCondensed-BoldOblique.ttf");
 }
 
 
 @font-face {
     font-family: "DejaVu Sans Condensed";
-    src: url("./src/assets/fonts/DejaVuSansCondensed-Oblique.ttf");
+    src: url("../fonts/DejaVuSansCondensed-Oblique.ttf");
 }
 
 
 @font-face {
     font-family: "DejaVu Sans Condensed";
-    src: url("./src/assets/fonts/DejaVuSansCondensed.ttf");
+    src: url("../fonts/DejaVuSansCondensed.ttf");
 }
 
 
 @font-face {
     font-family: "Fredericka the Great";
-    src: url("./src/assets/fonts/FrederickatheGreat-Regular.ttf");
+    src: url("../fonts/FrederickatheGreat-Regular.ttf");
 }
 
 
 @font-face {
     font-family: "Libre Baskerville";
-    src: url("./src/assets/fonts/LibreBaskerville-Bold.ttf");
+    src: url("../fonts/LibreBaskerville-Bold.ttf");
 }
 
 
 @font-face {
     font-family: "Libre Baskerville";
-    src: url("./src/assets/fonts/LibreBaskerville-Italic.ttf");
+    src: url("../fonts/LibreBaskerville-Italic.ttf");
 }
 
 
 @font-face {
     font-family: "Libre Baskerville";
-    src: url("./src/assets/fonts/LibreBaskerville-Regular.ttf");
+    src: url("../fonts/LibreBaskerville-Regular.ttf");
 }
 
 
 @font-face {
     font-family: "Luckiest Guy";
-    src: url("./src/assets/fonts/LuckiestGuy-Regular.ttf");
+    src: url("../fonts/LuckiestGuy-Regular.ttf");
 }
 
 
 @font-face {
     font-family: "Nanum Pen";
-    src: url("./src/assets/fonts/NanumPenScript-Regular.ttf");
+    src: url("../fonts/NanumPenScript-Regular.ttf");
 }
 
 
 @font-face {
     font-family: "Noto Sans Arabic";
-    src: url("./src/assets/fonts/NotoSansArabic-VariableFont_wdth,wght.ttf");
+    src: url("../fonts/NotoSansArabic-VariableFont_wdth,wght.ttf");
 }
 
 
 @font-face {
     font-family: "Noto Sans TC Black";
-    src: url("./src/assets/fonts/NotoSansTC-Black.ttf");
+    src: url("../fonts/NotoSansTC-Black.ttf");
 }
 
 
 @font-face {
     font-family: "Noto Sans TC";
-    src: url("./src/assets/fonts/NotoSansTC-Bold.ttf");
+    src: url("../fonts/NotoSansTC-Bold.ttf");
 }
 
 
 @font-face {
     font-family: "Noto Sans TC ExtraBold";
-    src: url("./src/assets/fonts/NotoSansTC-ExtraBold.ttf");
+    src: url("../fonts/NotoSansTC-ExtraBold.ttf");
 }
 
 
 @font-face {
     font-family: "Noto Sans TC ExtraLight";
-    src: url("./src/assets/fonts/NotoSansTC-ExtraLight.ttf");
+    src: url("../fonts/NotoSansTC-ExtraLight.ttf");
 }
 
 
 @font-face {
     font-family: "Noto Sans TC Light";
-    src: url("./src/assets/fonts/NotoSansTC-Light.ttf");
+    src: url("../fonts/NotoSansTC-Light.ttf");
 }
 
 
 @font-face {
     font-family: "Noto Sans TC Medium";
-    src: url("./src/assets/fonts/NotoSansTC-Medium.ttf");
+    src: url("../fonts/NotoSansTC-Medium.ttf");
 }
 
 
 @font-face {
     font-family: "Noto Sans TC";
-    src: url("./src/assets/fonts/NotoSansTC-Regular.ttf");
+    src: url("../fonts/NotoSansTC-Regular.ttf");
 }
 
 
 @font-face {
     font-family: "Noto Sans TC SemiBold";
-    src: url("./src/assets/fonts/NotoSansTC-SemiBold.ttf");
+    src: url("../fonts/NotoSansTC-SemiBold.ttf");
 }
 
 
 @font-face {
     font-family: "Noto Sans TC Thin";
-    src: url("./src/assets/fonts/NotoSansTC-Thin.ttf");
+    src: url("../fonts/NotoSansTC-Thin.ttf");
 }
 
 
 @font-face {
     font-family: "Nunito ExtraLight";
-    src: url("./src/assets/fonts/Nunito-Italic-VariableFont_wght.ttf");
+    src: url("../fonts/Nunito-Italic-VariableFont_wght.ttf");
 }
 
 
 @font-face {
     font-family: "Nunito ExtraLight";
-    src: url("./src/assets/fonts/Nunito-VariableFont_wght.ttf");
+    src: url("../fonts/Nunito-VariableFont_wght.ttf");
 }
 
 
 @font-face {
     font-family: "Oswald";
-    src: url("./src/assets/fonts/Oswald-VariableFont_wght.ttf");
+    src: url("../fonts/Oswald-VariableFont_wght.ttf");
 }
 
 
 @font-face {
     font-family: "Pacifico";
-    src: url("./src/assets/fonts/Pacifico-Regular.ttf");
+    src: url("../fonts/Pacifico-Regular.ttf");
 }
 
 
 @font-face {
     font-family: "Permanent Marker";
-    src: url("./src/assets/fonts/PermanentMarker-Regular.ttf");
+    src: url("../fonts/PermanentMarker-Regular.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto Black";
-    src: url("./src/assets/fonts/Roboto-Black.ttf");
+    src: url("../fonts/Roboto-Black.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto Black";
-    src: url("./src/assets/fonts/Roboto-BlackItalic.ttf");
+    src: url("../fonts/Roboto-BlackItalic.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto";
-    src: url("./src/assets/fonts/Roboto-Bold.ttf");
+    src: url("../fonts/Roboto-Bold.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto";
-    src: url("./src/assets/fonts/Roboto-BoldItalic.ttf");
+    src: url("../fonts/Roboto-BoldItalic.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto";
-    src: url("./src/assets/fonts/Roboto-Italic.ttf");
+    src: url("../fonts/Roboto-Italic.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto Light";
-    src: url("./src/assets/fonts/Roboto-Light.ttf");
+    src: url("../fonts/Roboto-Light.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto Light";
-    src: url("./src/assets/fonts/Roboto-LightItalic.ttf");
+    src: url("../fonts/Roboto-LightItalic.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto Medium";
-    src: url("./src/assets/fonts/Roboto-Medium.ttf");
+    src: url("../fonts/Roboto-Medium.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto Medium";
-    src: url("./src/assets/fonts/Roboto-MediumItalic.ttf");
+    src: url("../fonts/Roboto-MediumItalic.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto";
-    src: url("./src/assets/fonts/Roboto-Regular.ttf");
+    src: url("../fonts/Roboto-Regular.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto Thin";
-    src: url("./src/assets/fonts/Roboto-Thin.ttf");
+    src: url("../fonts/Roboto-Thin.ttf");
 }
 
 
 @font-face {
     font-family: "Roboto Thin";
-    src: url("./src/assets/fonts/Roboto-ThinItalic.ttf");
+    src: url("../fonts/Roboto-ThinItalic.ttf");
 }
 
 
 @font-face {
     font-family: "Shrikhand";
-    src: url("./src/assets/fonts/Shrikhand-Regular.ttf");
+    src: url("../fonts/Shrikhand-Regular.ttf");
 }
 
 
 @font-face {
     font-family: "The Bold Font";
-    src: url("./src/assets/fonts/THEBOLDFONT.ttf");
+    src: url("../fonts/THEBOLDFONT.ttf");
 }
 
 
 @font-face {
     font-family: "Arial CE";
-    src: url("./src/assets/fonts/arialceb.ttf");
+    src: url("../fonts/arialceb.ttf");
 }
