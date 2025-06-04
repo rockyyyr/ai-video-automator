@@ -22,6 +22,9 @@ export default {
         MICHAEL: 'am_michael',
         ONYX: 'am_onyx',
         PUCK: 'am_puck',
-        SANTA: 'am_santa'
+        SANTA: 'am_santa',
+        GEORGE: 'bm_george',
+        DANIEL: 'bm_daniel',
+        OMEGA: 'hm_omega',
     }
 };

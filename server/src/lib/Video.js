@@ -15,6 +15,7 @@ api.interceptors.response.use(
 
 export async function clipsFromImages(scenes, callback) {
     for (const scene of scenes) {
+
         const result = await api.post('/image/convert/video', {
             image_url: scene['Image URL'],
             length: parseFloat(scene.Duration),
@@ -88,28 +89,37 @@ export async function compose({ videoUrl, audioUrl }) {
     return result?.response && result.response[0]?.file_url;
 }
 
-export async function addCaptions(videoUrl, settings) {
-    const result = await api.post('/video/caption', {
-        video_url: videoUrl,
-        settings: settings || {
-            line_color: "#FFFFFF",
-            word_color: "#22b525",
-            all_caps: true,
-            max_words_per_line: 3,
-            font_size: 80,
-            bold: false,
-            italic: false,
-            underline: false,
-            strikeout: false,
-            outline_width: 6,
-            shadow_offset: 8,
-            style: "highlight",
-            font_family: "The Bold Font",
-            position: "top_center",
-        },
-        language: 'en',
-        id: '/captioned-video'
-    });
+export async function addCaptions(videoUrl, settings, replace = false) {
+    let result;
+
+    try {
+        result = await api.post('/video/caption', {
+            video_url: videoUrl,
+            settings: settings || {
+                line_color: "#FFFFFF",
+                word_color: "#22b525",
+                all_caps: true,
+                max_words_per_line: 3,
+                font_size: 80,
+                bold: false,
+                italic: false,
+                underline: false,
+                strikeout: false,
+                outline_width: 6,
+                shadow_offset: 8,
+                style: "highlight",
+                font_family: "The Bold Font",
+                position: "top_center",
+            },
+            replace: replace ? JSON.parse(replace) : [],
+            language: 'en',
+            id: '/captioned-video'
+        });
+
+    } catch (error) {
+        console.error(error.response.data);
+        throw new Error(error?.response?.data);
+    }
 
     if (!result || result.message !== 'success') {
         throw new Error('Error composing video:\n' + result.message);

@@ -36,7 +36,7 @@ export default function Sidebar({ tabs }) {
                     ))}
                 </div>
             </div >
-            <section className='container' style={{ height: 1000 }}>
+            <section className='container' style={{ minHeight: 1000 }}>
                 {tabs[activeTab].component}
             </section>
         </>

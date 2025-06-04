@@ -57,7 +57,7 @@ export default function VideoCards({ videos = [], className = '' }) {
                     <div>{dayjs(parseInt(video.Timestamp)).format('h:mma MMM DD')}</div>
                     {video.Error && (
                         <>
-                            <div style={{ color: 'red' }}>Video Errored! Resume?</div>
+                            <div style={{ color: 'red' }}>Video Stopped! Resume?</div>
                             <div style={{ display: 'flex', gap: 10 }}>
                                 <button
                                     onClick={() => restartVideo(video.id)}
@@ -114,7 +114,7 @@ export default function VideoCards({ videos = [], className = '' }) {
                                 autoPlay={false}
                                 controls
                                 className={'carousel-img carousel-video-hoverable'}
-                                src={video['Video With Captions URL']?.replace('host.docker.internal', 'localhost')}
+                                src={video['Video With Captions URL']?.replace('host.docker.internal', window.location.hostname)}
                                 style={{ width: 'auto', height: 80 }}
                             />
                         ) : 'N/A'}

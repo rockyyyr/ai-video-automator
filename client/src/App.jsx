@@ -66,10 +66,10 @@ export default function App() {
         return () => clearInterval(interval); // Clear interval on component unmount
     }, []);
 
-    const changePage = page => {
-        page.current = page;
+    const changePage = nextPage => {
+        page.current = nextPage;
 
-        Api.getCompletedVideos(page, pageSize)
+        Api.getCompletedVideos(nextPage, pageSize)
             .then(completed => {
                 completedRef.current = completed;
                 setCompletedVideos(completed);
@@ -100,7 +100,7 @@ export default function App() {
                 <section style={{ padding: '0 50px' }}>
                     <h1>Completed</h1>
                     <VideoCards className="dark-text" videos={completedVideos} />
-                    <Paginator onChange={page => changePage(page)} />
+                    <Paginator currentPage={page.current} onChange={page => changePage(page)} />
                 </section>
             </main>
 

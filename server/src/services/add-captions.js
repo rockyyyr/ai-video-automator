@@ -15,7 +15,7 @@ export default async function run(video) {
 
     const settings = captionProfile?.settings && JSON.parse(captionProfile.settings);
 
-    const url = await Video.addCaptions(video['Video With Audio URL'], settings);
+    const url = await Video.addCaptions(video['Video With Audio URL'], settings, video['Replace Words']);
 
     return Baserow.updateRow(Baserow.Tables.VIDEOS, video.id, {
         'Video With Captions URL': url,

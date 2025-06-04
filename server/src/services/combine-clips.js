@@ -7,7 +7,11 @@ export default async function run(video) {
     const scenes = await Baserow.find(Baserow.Tables.SCENES, [
         {
             field: 'Video ID',
-            value: video.id
+            value: video.id,
+        },
+        {
+            field: 'Clip URL',
+            type: 'not_empty'
         }
     ]);
 

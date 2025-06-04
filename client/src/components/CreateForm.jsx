@@ -14,6 +14,7 @@ const Defaults = {
 export default function CreateForm({ onSubmit, captionProfiles }) {
     const [topic, setTopic] = useState('');
     const [transcript, setTranscript] = useState('');
+    const [script, setScript] = useState('');
     const [notes, setNotes] = useState('');
     const [captionProfile, setCaptionProfile] = useState(import.meta.env.VITE_DEFAULT_CAPTION_PROFILE);
     const [duration, setDuration] = useState(Defaults.DURATION);
@@ -25,7 +26,7 @@ export default function CreateForm({ onSubmit, captionProfiles }) {
     useState(() => {
         if (captionProfiles && captionProfiles.length > 0) {
             const defaultProfile = captionProfiles.find(profile => profile.profileName === 'Default');
-            setCaptionProfile(defaultProfile?.id || 'fuck you');
+            setCaptionProfile(defaultProfile?.id);
         }
     }, [captionProfiles]);
 
@@ -63,6 +64,7 @@ export default function CreateForm({ onSubmit, captionProfiles }) {
         const userInput = {
             topic,
             transcript,
+            script,
             notes,
             duration,
             generativeStyle,
@@ -99,20 +101,27 @@ export default function CreateForm({ onSubmit, captionProfiles }) {
                 <fieldset className="grid">
                     <label htmlFor="topic">
                         Topic
-                        <textarea id="topic" rows={3} resizable="true" onChange={setValue(setTopic)} required={!transcript} />
+                        <textarea id="topic" rows={3} resizable="true" onChange={setValue(setTopic)} required={!transcript && !script} />
                     </label>
 
                     <label htmlFor="transcript">
                         Transcript
-                        <textarea id="transcript" rows={3} resizable="true" onChange={setValue(setTranscript)} required={!topic} />
+                        <textarea id="transcript" rows={3} resizable="true" onChange={setValue(setTranscript)} required={!topic && !script} />
                     </label>
 
                 </fieldset>
-                <fieldset>
+                <fieldset className="grid">
+                    {import.meta.env.VITE_SHOW_SCRIPT_OPTION && (
+                        <label htmlFor="script">
+                            Script
+                            <textarea id="script" rows={3} resizeable="true" onChange={setValue(setScript)} required={!topic && !transcript} />
+                        </label>
+                    )}
 
-                    <label htmlFor="notes">Notes (Optional)</label>
-                    <textarea id="notes" rows={2} resizeable="true" onChange={setValue(setNotes)} />
-
+                    <label htmlFor="notes">
+                        Notes (Optional)
+                        <textarea id="notes" rows={3} resizeable="true" onChange={setValue(setNotes)} disabled={script} />
+                    </label>
                 </fieldset>
                 <fieldset className="grid">
                     <label htmlFor="generativeStyle">
@@ -135,7 +144,7 @@ export default function CreateForm({ onSubmit, captionProfiles }) {
                     </label>
                     <label htmlFor="captionProfile">
                         Caption Profile
-                        <select id="captionProfile" onChange={setValue(setCaptionProfile)}>
+                        <select id="captionProfile" onChange={setValue(setCaptionProfile)} value={captionProfile}>
                             {captionProfiles.map(profile => (
                                 <option key={profile.id} value={profile.id}>
                                     {profile.profileName}
@@ -154,7 +163,7 @@ export default function CreateForm({ onSubmit, captionProfiles }) {
 
                     <label htmlFor="ttsSpeed">
                         TTS Speed
-                        <input id="ttsSpeed" type="number" min="0.5" max="2.0" step="0.1" defaultValue={Defaults.TTS_SPEED} onChange={setValue(setTtsSpeed)} required />
+                        <input id="ttsSpeed" type="number" min="0.5" max="4.0" step="0.05" defaultValue={Defaults.TTS_SPEED} onChange={setValue(setTtsSpeed)} required />
                     </label>
 
                     <label htmlFor="sceneLength">

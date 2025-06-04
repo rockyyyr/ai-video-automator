@@ -27,6 +27,7 @@ export default function Paginator({ onChange, disableNext }) {
             >
                 &#8592; prev
             </Button>
+            <button className="pico-background-blue-50">Page: {currentPage}</button>
             <Button
                 onClick={() => handleClick(1)}
                 disabled={disableNext}
@@ -34,6 +35,6 @@ export default function Paginator({ onChange, disableNext }) {
                 next &#8594;
 
             </Button>
-        </div>
+        </div >
     );
 }

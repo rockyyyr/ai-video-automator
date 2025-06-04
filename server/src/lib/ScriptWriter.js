@@ -7,7 +7,7 @@ const MAINSCRIPT = /(?<=\*\*MainScript:\*\*)[\S|\s|.]*?(?=\*\*)/g;
 const CTA = /(?<=\*\*Call to Action:\*\*)[\S|\s|.]*/g;
 
 const topicInstructions = `
-Act as a YouTube video scriptwriter who specializes in transforming user-submitted ideas—whether they are story concepts or intriguing facts—into engaging, bite-sized video scripts. The user will also provide a target video duration, which you should keep in mind while crafting the content and the script should be as close to the target video duration as possible. Your goal is to take these ideas and produce compelling, original content without referencing specific sources or names.
+Act as a YouTube video scriptwriter who specializes in transforming user-submitted ideas—whether they are story concepts or intriguing facts—into engaging, bite-sized video scripts. The user will also provide a target video duration, which you should keep in mind while crafting the content and the script should be as close to the target video duration as possible. Stay within 5 seconds of the target duration. Your goal is to take these ideas and produce compelling, original content without referencing specific sources or names.
 
 Your script should be engaging, energetic, and easy to follow, turning user concepts into captivating narratives within the specified video length. Use a conversational tone, vivid descriptions, and a strong hook to instantly grab attention. Keep the pacing snappy, ensuring that every second counts.
 
@@ -25,7 +25,7 @@ Make sure the MainScript feels seamless and original, as if these insights are b
 
 
 const transcriptInstructions = `
-Act as a YouTube video scriptwriter who specializes in transforming user-submitted transcripts into engaging, bite-sized video scripts. The user will also provide a target video length, which you should keep in mind while crafting the content and the script should be as close to the target video duration as possible. Your goal is to take this transcript and produce a compelling, video ready script.
+Act as a YouTube video scriptwriter who specializes in transforming user-submitted transcripts into engaging, bite-sized video scripts. The user will also provide a target video length, which you should keep in mind while crafting the content and the script should be as close to the target video duration as possible. Stay within 5 seconds of the target duration. Your goal is to take this transcript and produce a compelling, video ready script.
 
 Your script should be engaging, energetic, and easy to follow, turning the transcript into captivating narratives within the specified video length. Use a conversational tone, vivid descriptions, and a strong hook to instantly grab attention. Keep the pacing snappy, ensuring that every second counts.
 
@@ -129,90 +129,139 @@ export async function scriptFromTranscript(userInput) {
     return generateScript(userInput, transcriptPrompt);
 }
 
+function roundTo(value, precision) {
+    const factor = Math.pow(10, precision);
+    return Math.round(value * factor) / factor;
+};
+
 export function chuckScriptIntoScenes(captions, timeInSeconds) {
-    // Input from the previous step
-    const splitLength = timeInSeconds;
-    const inputData = captions;
-    const segments = [];
+    const endPadDuration = 0.3;
+    let scenes = [];
+    let currentWords = [];
+    let currentScene = 1;
+    let sceneStartTime = 0;
 
-    let currentSegment = {
-        id: 1,
-        words: "",
-        duration: 0,
-    };
+    for (let i = 0; i < captions.length; i++) {
+        const { word, end_time } = captions[i];
 
-    let currentStartTime = -1; // Start before the first word
-    let totalDuration = 0; // Tracking total duration
-    let currentEndTime = 0;
+        currentWords.push(word);
 
-    // Define the pause buffer (in seconds)
-    const pauseBuffer = 0.1; // Adjust this value based on your requirements
+        if (end_time - sceneStartTime >= timeInSeconds || i === captions.length - 1) {
+            scenes.push({
+                id: currentScene++,
+                words: currentWords.join(' '),
+                duration: end_time - sceneStartTime,
+            });
 
-    // Loop through the input data
-    for (const wordObj of inputData) {
-        const { word, start_time, end_time } = wordObj;
-
-        // If this is the first word in a segment, set the start time
-        if (currentStartTime === -1) {
-            currentStartTime = start_time;
-        }
-
-        // Add the word to the current segment
-        currentSegment.words += (currentSegment.words ? ' ' : '') + word;
-
-        // Update the end time
-        currentEndTime = end_time;
-
-        // Keep track of the duration without pauses
-        currentSegment.duration = (currentEndTime - currentStartTime).toFixed(2);
-
-        // Check if we should finalize the current segment (if it exceeds 4 seconds)
-        if (currentSegment.duration >= splitLength) {
-            // Add pause buffer to the segment's duration before pushing it
-            currentSegment.duration = parseFloat((parseFloat(currentSegment.duration) + pauseBuffer).toFixed(2));
-
-            // Update total duration for the segment
-            totalDuration += parseFloat(currentSegment.duration);
-
-            // Push the current segment to segments
-            segments.push(currentSegment);
-
-            // Reset for the next segment
-            currentSegment = {
-                id: segments.length + 1,
-                words: "",
-                duration: 0,
-            };
-            currentStartTime = -1; // Reset the start time
+            sceneStartTime = end_time;
+            currentWords = [];
         }
     }
 
-    // Handle any leftover words in the last segment
-    if (currentSegment.words) {
-        currentSegment.duration = (currentEndTime - currentStartTime).toFixed(2);
-        // Add pause buffer to the last segment's duration
-        currentSegment.duration = parseFloat((parseFloat(currentSegment.duration) + pauseBuffer).toFixed(2));
+    const finalScene = scenes[scenes.length - 1];
 
-        totalDuration += parseFloat(currentSegment.duration); // Add last segment to total
-        segments.push(currentSegment);
+    if (finalScene.duration < 2.5) {
+        const scene = scenes.pop();
+        scenes[scenes.length - 1].words += ' ' + scene.words;
+        scenes[scenes.length - 1].duration += scene.duration;
     }
 
-    // Round total duration
-    const roundedTotalDuration = Math.round(totalDuration);
+    if (scenes.length > 0) {
+        scenes[scenes.length - 1].duration += endPadDuration;
+    }
 
-    // Calculate total minutes and seconds
-    const totalSeconds = Math.floor(roundedTotalDuration);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
+    const totalDuration = scenes.reduce((acc, scene) => acc + scene.duration, 0);
 
-    // Create a readable format for the total runtime
-    const totalRuntimeString = `${minutes} minute${minutes !== 1 ? 's' : ''}, ${seconds} second${seconds !== 1 ? 's' : ''}`;
-
-    const output = {
-        segments,
-        totalDuration: roundedTotalDuration,
-        TotalMinutes: totalRuntimeString
+    return {
+        segments: scenes.map(x => ({ ...x, duration: roundTo(x.duration, 2) })),
+        totalDuration: roundTo(totalDuration, 2)
     };
-
-    return output;
 }
+
+// export function chuckScriptIntoScenes(captions, timeInSeconds) {
+//     // Input from the previous step
+//     const splitLength = timeInSeconds;
+//     const inputData = captions;
+//     const segments = [];
+
+//     let currentSegment = {
+//         id: 1,
+//         words: "",
+//         duration: 0,
+//     };
+
+//     let currentStartTime = -1; // Start before the first word
+//     let totalDuration = 0; // Tracking total duration
+//     let currentEndTime = 0;
+
+//     // Define the pause buffer (in seconds)
+//     const pauseBuffer = 0.1; // Adjust this value based on your requirements
+
+//     // Loop through the input data
+//     for (const wordObj of inputData) {
+//         const { word, start_time, end_time } = wordObj;
+
+//         // If this is the first word in a segment, set the start time
+//         if (currentStartTime === -1) {
+//             currentStartTime = start_time;
+//         }
+
+//         // Add the word to the current segment
+//         currentSegment.words += (currentSegment.words ? ' ' : '') + word;
+
+//         // Update the end time
+//         currentEndTime = end_time;
+
+//         // Keep track of the duration without pauses
+//         currentSegment.duration = (currentEndTime - currentStartTime).toFixed(2);
+
+//         // Check if we should finalize the current segment (if it exceeds 4 seconds)
+//         if (currentSegment.duration >= splitLength) {
+//             // Add pause buffer to the segment's duration before pushing it
+//             currentSegment.duration = parseFloat((parseFloat(currentSegment.duration) + pauseBuffer).toFixed(2));
+
+//             // Update total duration for the segment
+//             totalDuration += parseFloat(currentSegment.duration);
+
+//             // Push the current segment to segments
+//             segments.push(currentSegment);
+
+//             // Reset for the next segment
+//             currentSegment = {
+//                 id: segments.length + 1,
+//                 words: "",
+//                 duration: 0,
+//             };
+//             currentStartTime = -1; // Reset the start time
+//         }
+//     }
+
+//     // Handle any leftover words in the last segment
+//     if (currentSegment.words) {
+//         currentSegment.duration = (currentEndTime - currentStartTime).toFixed(2);
+//         // Add pause buffer to the last segment's duration
+//         currentSegment.duration = parseFloat((parseFloat(currentSegment.duration) + pauseBuffer).toFixed(2));
+
+//         totalDuration += parseFloat(currentSegment.duration); // Add last segment to total
+//         segments.push(currentSegment);
+//     }
+
+//     // Round total duration
+//     const roundedTotalDuration = Math.round(totalDuration);
+
+//     // Calculate total minutes and seconds
+//     const totalSeconds = Math.floor(roundedTotalDuration);
+//     const minutes = Math.floor(totalSeconds / 60);
+//     const seconds = totalSeconds % 60;
+
+//     // Create a readable format for the total runtime
+//     const totalRuntimeString = `${minutes} minute${minutes !== 1 ? 's' : ''}, ${seconds} second${seconds !== 1 ? 's' : ''}`;
+
+//     const output = {
+//         segments,
+//         totalDuration: roundedTotalDuration,
+//         TotalMinutes: totalRuntimeString
+//     };
+
+//     return output;
+// }

@@ -12,6 +12,22 @@ const minio = new Minio.Client({
 
 const url = fileName => `http://host.docker.internal:9000/${MINIO_BUCKET_NAME}/${fileName}`;
 
+export async function save(fileName, savable) {
+    try {
+        await minio.putObject(
+            MINIO_BUCKET_NAME,
+            fileName,
+            savable
+        );
+
+        return url(fileName);
+
+    } catch (error) {
+        console.error('Error uploading file:', error);
+        throw error;
+    }
+}
+
 export async function saveFromFile(fileName, filePath) {
     try {
         await minio.fPutObject(

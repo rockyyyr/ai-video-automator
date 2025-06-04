@@ -16,19 +16,20 @@ export async function restartVideo({ videoId }) {
     return runServices(video);
 }
 
-export async function generateVideo({ topic, transcript, duration, notes, generativeStyle, ttsVoice, ttsSpeed, sceneLength, captionProfile }, queue) {
+export async function generateVideo({ topic, transcript, duration, script, notes, generativeStyle, ttsVoice, ttsSpeed, sceneLength, captionProfile }, queue) {
     const video = await Baserow.createRow(Baserow.Tables.VIDEOS, {
         Topic: topic,
         Transcript: transcript,
         Duration: parseFloat(duration),
         Notes: notes,
+        Script: script,
         'Scene Length': sceneLength,
         'Generative Style': generativeStyle,
         'TTS Voice': ttsVoice,
         'TTS Speed': ttsSpeed,
         'Timestamp': Date.now(),
         captionProfile: parseInt(captionProfile),
-        Step: 0
+        Step: script ? 1 : 0,
     });
 
     return queue(() => runServices(video));

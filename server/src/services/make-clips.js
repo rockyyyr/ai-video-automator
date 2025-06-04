@@ -12,6 +12,10 @@ export default async function run(video) {
         {
             field: 'Image URL',
             type: 'not_empty'
+        },
+        {
+            field: 'Clip URL',
+            type: 'empty'
         }
     ]);
 

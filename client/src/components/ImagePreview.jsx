@@ -8,7 +8,7 @@ export default function ImagePreview({ src, videoId, sceneId }) {
     const Image = ({ width, hoverable = false, style }) => (
         <img
             className={(hoverable && src) ? 'carousel-img carousel-img-hoverable' : 'carousel-img'}
-            src={src ? src.replace('host.docker.internal', 'localhost') : MissingImage}
+            src={src ? src.replace('host.docker.internal', window.location.hostname) : MissingImage}
             style={{
                 width,
                 height: 'auto',
