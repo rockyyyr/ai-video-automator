@@ -26,6 +26,19 @@ router.post('/video/restart', (req, res) => {
     res.end();
 });
 
+router.patch('/video/:id', async (req, res) => {
+    const videoId = req.params.id;
+
+    try {
+        const updatedVideo = await Baserow.updateRow(Baserow.Tables.VIDEOS, videoId, req.body);
+        res.json(updatedVideo);
+
+    } catch (error) {
+        console.error('Error updating video:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 router.get('/video/in-progress', async (req, res) => {
     try {
         const videos = await Baserow.find(Baserow.Tables.VIDEOS, [
@@ -84,6 +97,49 @@ router.delete('/video/:videoId', async (req, res) => {
         res.end();
     } catch (error) {
         console.error('Error deleting video:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+router.patch('/image/prompt/:sceneId', async (req, res) => {
+    const sceneId = req.params.sceneId;
+    const { prompt, videoId } = req.body;
+
+    try {
+        await Baserow.updateRow(Baserow.Tables.SCENES, sceneId, {
+            'Image Prompt': prompt,
+            'Image URL': null,
+            'Clip URL': null
+        });
+
+        await Baserow.updateRow(Baserow.Tables.VIDEOS, videoId, {
+            Step: 3,
+            Error: true,
+            'Video Combined Clips URL': null,
+            'Video With Audio URL': null,
+            'Video With Captions URL': null
+        });
+
+        res.end();
+
+    } catch (error) {
+        console.error('Error updating image prompt:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+router.get('/image/all', async (req, res) => {
+    try {
+        const scenes = await Baserow.find(Baserow.Tables.SCENES, [
+            {
+                field: 'Image URL',
+                type: 'not_empty'
+            }
+        ], { returning: 'Image URL' });
+        res.json(scenes);
+
+    } catch (error) {
+        console.error('Error fetching images:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });

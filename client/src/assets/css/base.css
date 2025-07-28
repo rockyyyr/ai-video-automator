@@ -101,3 +101,7 @@
 button:hover {
     filter: grayscale(0.1);
 }
+
+.modal-form * {
+    color: #e0e3e7;
+}

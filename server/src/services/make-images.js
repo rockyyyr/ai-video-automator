@@ -20,17 +20,26 @@ export default async function run(video) {
         }
     ]);
 
+    let count = 0;
+
     await ImageGenerator.generateImages(scenes, async (scene, imageData) => {
-        const url = await MinIO.saveFromBase64(`${video.uuid}-image-${scene['Segment #']}.jpeg`, imageData);
+        const url = await MinIO.saveFromBase64(`${Math.random()}-${video.uuid}-image-${scene['Segment #']}.jpeg`, imageData);
 
         await Baserow.updateRow(Baserow.Tables.SCENES, scene.id, {
             'Image URL': url
         });
 
         console.log(`Image complete: ${url}`);
+        count++;
     });
 
-    return Baserow.updateRow(Baserow.Tables.VIDEOS, video.id, {
-        Step: 5
-    });
+    if (count === scenes.length) {
+        return Baserow.updateRow(Baserow.Tables.VIDEOS, video.id, {
+            Step: 5
+        });
+
+    } else {
+        return run(video);
+    }
+
 }

@@ -25,6 +25,7 @@ export default function App() {
     const [inProgressVideos, setInProgressVideos] = useState([]);
     const [completedVideos, setCompletedVideos] = useState([]);
     const [captionProfiles, setCaptionProfiles] = useState([]);
+    const [replacementImages, setReplacementImages] = useState([]);
 
     const inProgressRef = useRef([]);
     const completedRef = useRef([]);
@@ -61,6 +62,10 @@ export default function App() {
 
         fetchVideos();
 
+        Api.getReplacementImages()
+            .then(setReplacementImages)
+            .catch(error => console.error('Error fetching replacement images:', error));
+
 
         const interval = setInterval(fetchVideos, 5000); // Fetch every 5 seconds
         return () => clearInterval(interval); // Clear interval on component unmount
@@ -91,7 +96,7 @@ export default function App() {
                 <main className="container-fluid pico-background-blue-50">
                     <section className='dark-text' style={{ padding: '0 50px' }}>
                         <h1>In Progress</h1>
-                        <VideoCards videos={inProgressVideos} />
+                        <VideoCards videos={inProgressVideos} replacementImages={replacementImages} />
                     </section>
                 </main>
             )}
@@ -99,7 +104,7 @@ export default function App() {
             <main className="container-fluid pico-background-blue-500">
                 <section style={{ padding: '0 50px' }}>
                     <h1>Completed</h1>
-                    <VideoCards className="dark-text" videos={completedVideos} />
+                    <VideoCards className="dark-text" videos={completedVideos} replacementImages={replacementImages} />
                     <Paginator currentPage={page.current} onChange={page => changePage(page)} />
                 </section>
             </main>

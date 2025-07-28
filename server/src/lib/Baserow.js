@@ -29,13 +29,14 @@ const makeFilters = filters => {
         .join('&');
 };
 
-export async function find(tableId, filters, { page, pageSize, orderBy } = { page: 1, pageSize: 100 }) {
+export async function find(tableId, filters, { page, pageSize, orderBy, returning } = { page: 1, pageSize: 100 }) {
     const response = await api.get(
         `/api/database/rows/table/${tableId}/?user_field_names=true&${makeFilters(filters)}&${qs.stringify({
             user_field_names: true,
             page,
             size: pageSize,
-            order_by: orderBy
+            order_by: orderBy,
+            include: returning
         })}`
     );
     return response?.results;
@@ -58,6 +59,6 @@ export function deleteRow(tableId, rowId) {
 }
 
 export function deleteBatch(tableId, rowIds) {
-    return api.delete(`/api/database/rows/table/${tableId}/batchDelete/`, { items: rowIds });
+    return api.post(`/api/database/rows/table/${tableId}/batch-delete/`, { items: rowIds });
 }
 

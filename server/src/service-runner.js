@@ -32,7 +32,8 @@ export async function generateVideo({ topic, transcript, duration, script, notes
         Step: script ? 1 : 0,
     });
 
-    return queue(() => runServices(video));
+    queue(() => runServices(video));
+    return;
 }
 
 async function runServices(videoData) {

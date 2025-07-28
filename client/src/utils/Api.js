@@ -35,8 +35,20 @@ export function getCaptionProfiles() {
     return api.get('/settings/caption-profiles');
 }
 
+export const updateVideo = (video) => {
+    return api.patch('/video/' + video.id, video);
+};
+
+export const getReplacementImages = () => {
+    return api.get('/image/all');
+};
+
 export const deleteVideo = (videoId) => {
     return api.delete('/video/' + videoId);
+};
+
+export const updateImagePrompt = (videoId, sceneId, prompt) => {
+    return api.patch(`/image/prompt/${sceneId}`, { videoId, prompt });
 };
 
 export const deleteImage = (videoId, sceneId) => {
