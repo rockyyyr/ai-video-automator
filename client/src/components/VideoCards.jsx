@@ -65,34 +65,36 @@ export default function VideoCards({ videos = [], className = '', replacementIma
                                 )}
                                 <div>{dayjs(parseInt(video.Timestamp)).format('h:mma MMM DD')}</div>
                             </div>
-                            {video.Error && (
-                                <>
-                                    <div style={{ color: 'red' }}>Video Stopped! Resume?</div>
-                                    <div style={{ display: 'flex', gap: 10 }}>
-                                        <button
-                                            onClick={() => restartVideo(video.id)}
-                                            className='pico-background-blue-500'
-                                            style={{ height: 40, lineHeight: 0, color: 'white' }}
-                                        >
-                                            Resume
-                                        </button>
-                                        <button
-                                            onClick={() => deleteVideo(video.id)}
-                                            className='outline '
-                                            style={{ height: 40, lineHeight: 0, color: 'red', borderColor: 'red' }}
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
-                                </>
-                            )}
-                            <button
-                                onClick={() => setSelectedVideo(video)}
-                                className='outline '
-                                style={{ height: 40, lineHeight: 0, color: 'orange', borderColor: 'orange' }}
-                            >
-                                Edit
-                            </button>
+                            <div style={{ display: 'flex', gap: 10 }}>
+                                {video.Error && (
+                                    <>
+                                        <div style={{ color: 'red' }}>Video Stopped! Resume?</div>
+                                        <div style={{ display: 'flex', gap: 10 }}>
+                                            <button
+                                                onClick={() => restartVideo(video.id)}
+                                                className='pico-background-blue-500'
+                                                style={{ height: 40, lineHeight: 0, color: 'white' }}
+                                            >
+                                                Resume
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
+                                <button
+                                    onClick={() => deleteVideo(video.id)}
+                                    className='outline '
+                                    style={{ height: 40, lineHeight: 0, color: 'red', borderColor: 'red' }}
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                            {/* <button
+                                    onClick={() => setSelectedVideo(video)}
+                                    className='outline '
+                                    style={{ height: 40, lineHeight: 0, color: 'orange', borderColor: 'orange' }}
+                                >
+                                    Edit
+                                </button> */}
                         </div>
                         <div style={{ display: 'flex', gap: 20, justifyContent: 'space-between', padding: '0 30px' }}>
                             <Item label="Progress">
