@@ -1,14 +1,22 @@
 import { useState } from 'react';
 import * as Api from '../utils/Api';
+import * as Env from '../utils/Env';
+
 import MissingImage from '../assets/img/missing-image.png';
 
 export default function ImagePreview({ src, videoId, sceneId }) {
     const [open, setOpen] = useState(false);
 
+    const source = !src
+        ? MissingImage
+        : Env.isRemote()
+            ? src.replace('host.docker.internal:9000', window.location.hostname)
+            : src.replace('host.docker.internal', window.location.hostname);
+
     const Image = ({ width, hoverable = false, style }) => (
         <img
             className={(hoverable && src) ? 'carousel-img carousel-img-hoverable' : 'carousel-img'}
-            src={src ? src.replace('host.docker.internal', window.location.hostname) : MissingImage}
+            src={source}
             style={{
                 width,
                 height: 'auto',
