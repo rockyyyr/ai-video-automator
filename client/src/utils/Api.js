@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-const api = axios.create({
-    baseURL: `${window.location.protocol}//${window.location.hostname}:3000`,
-});
+const baseURL = window.location.hostname === 'tahr-precious-lemur.ngrok-free.app'
+    ? 'https://tahr-precious-lemur.ngrok-free.app/api'
+    : `http://${window.location.hostname}:3000`;
+
+const api = axios.create({ baseURL });
 
 api.interceptors.response.use(
     (response) => response.data,
