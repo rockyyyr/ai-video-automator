@@ -9,9 +9,7 @@ export default function ImagePreview({ src, videoId, sceneId }) {
 
     const source = !src
         ? MissingImage
-        : Env.isRemote()
-            ? src.replace('host.docker.internal:9000', window.location.hostname)
-            : src.replace('host.docker.internal', window.location.hostname);
+        : Env.transformHost(src);
 
     const Image = ({ width, hoverable = false, style }) => (
         <img
