@@ -14,6 +14,10 @@ export default defineConfig({
                 changeOrigin: true,
                 // if your API doesn't need the /api prefix, strip it:
                 rewrite: (p) => p.replace(/^\/api/, ''),
+            },
+            '/nca-toolkit': {
+                target: 'http://localhost:9000',
+                changeOrigin: true
             }
         }
     },
