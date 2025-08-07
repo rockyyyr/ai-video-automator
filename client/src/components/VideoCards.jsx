@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ImagePreview from './ImagePreview';
 import * as Api from '../utils/Api';
-import * as Env from '.../util/Env';
+import * as Env from '.../utils/Env';
 import dayjs from 'dayjs';
 import { toast } from 'react-toastify';
 import VideoModal from './VideoModal';
