@@ -39,15 +39,13 @@ For CPU only version run
 docker run -p 8880:8880 --name kokoro-tts-cpu ghcr.io/remsky/kokoro-fastapi-cpu:v0.2.2
 
 # 📋 Baserow (Database UI)
-docker run -d --name baserow -e BASEROW_PUBLIC_URL=http://host.docker.internal:85 -v C:\Docker\baserow-data:/baserow/data -p 85:80 -p 443:443 --restart unless-stopped baserow/baserow:1.32.5
+docker run -d --name baserow -e BASEROW_PUBLIC_URL=http://localhost:85 -v C:\Docker\baserow-data:/baserow/data -p 85:80 --restart unless-stopped baserow/baserow:1.32.5
 
 
 # 🚀 Step 3: Install NCA Toolkit
 Once MiniIO is set up and your access keys are ready:
 
 docker run -d -p 8080:8080 --name nca-toolkit -e API_KEY=thekey -e S3_ENDPOINT_URL=http://host.docker.internal:9000 -e S3_ACCESS_KEY=your_access_key -e S3_SECRET_KEY=your_secret_key -e S3_BUCKET_NAME=nca-toolkit -e S3_REGION=None stephengpope/no-code-architects-toolkit:latest
-
-
 
 Replace your_access_key and your_secret_key with the values from MiniIO.
 
