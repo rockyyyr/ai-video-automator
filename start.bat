@@ -1,9 +1,9 @@
 @echo off
 
-cd /d "C:\Users\aaron\brain-rot-6000\server"
+cd /d "C:\Users\psydu\brainrot\server"
 start cmd /k "npm start"
 
-cd /d "C:\Users\aaron\brain-rot-6000\client"
+cd /d "C:\Users\psydu\brainrot\client"
 start cmd /k "npm start"
 
 timeout /t 2 /nobreak >nul
