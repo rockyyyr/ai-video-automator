@@ -1,4 +1,4 @@
-import * as ChatGPT from './ChatGPT.js';
+// import * as ChatGPT from './ChatGPT.js';
 import * as OpenRouter from './Openrouter.js';
 
 const instructions = `
