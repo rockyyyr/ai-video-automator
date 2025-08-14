@@ -1,10 +1,11 @@
 import * as Video from '../lib/Video.js';
-import * as Baserow from '../lib/Baserow.js';
+import * as Database from '../lib/Database.js';
 
 export default async function run(video) {
     console.log('Generating clips from images');
+    const start = Date.now();
 
-    const scenes = await Baserow.find(Baserow.Tables.SCENES, [
+    const scenes = await Database.find(Database.Tables.SCENES, [
         {
             field: 'Video ID',
             value: video.id
@@ -20,14 +21,16 @@ export default async function run(video) {
     ]);
 
     await Video.clipsFromImages(scenes, async (scene, clipURL) => {
-        await Baserow.updateRow(Baserow.Tables.SCENES, scene.id, {
+        await Database.updateRow(Database.Tables.SCENES, scene.id, {
             'Clip URL': clipURL
         });
 
         console.log(`Scene ${scene['Segment #']} clip created: ${clipURL}`);
     });
 
-    return Baserow.updateRow(Baserow.Tables.VIDEOS, video.id, {
+    console.log('Generating clips from images complete:', `${Math.abs((Date.now() - start) / 1000)}s`);
+
+    return Database.updateRow(Database.Tables.VIDEOS, video.id, {
         Step: 6
     });
 }

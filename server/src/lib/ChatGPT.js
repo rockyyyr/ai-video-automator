@@ -2,6 +2,7 @@ import OpenAI from 'openai';
 
 const openai = new OpenAI({
     apiKey: process.env.CHATGPT_API_KEY,
+    project: process.env.CHATGPT_PROJECT_ID || null,
 });
 
 export async function prompt(prompt, instructions) {

@@ -8,8 +8,10 @@
         "doc": "doc"
     },
     "scripts": {
-        "start": "node main.js",
-        "dev": "nodemon main.js"
+        "start": "npm run migrate && node main.js",
+        "dev": "nodemon main.js",
+        "migrate": "dotenv -e .env -- knex migrate:latest --knexfile src/database/knexfile.js",
+        "rollback": "dotenv -e .env -- knex migrate:rollback --knexfile src/database/knexfile.js"
     },
     "author": "",
     "license": "ISC",
@@ -19,12 +21,15 @@
         "cors": "^2.8.5",
         "express": "^5.1.0",
         "form-data": "^4.0.2",
+        "knex": "^3.1.0",
         "minio": "^8.0.5",
         "openai": "^4.102.0",
         "p-queue": "^8.1.0",
+        "pg": "^8.16.3",
         "together-ai": "^0.16.0"
     },
     "devDependencies": {
-        "dotenv": "^16.5.0"
+        "dotenv": "^16.5.0",
+        "dotenv-cli": "^10.0.0"
     }
 }

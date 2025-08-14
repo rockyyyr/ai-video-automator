@@ -1,7 +1,7 @@
 import express from 'express';
 import Queue from 'p-queue';
 import * as Services from '../service-runner.js';
-import * as Baserow from '../lib/Baserow.js';
+import * as Database from '../lib/Database.js';
 
 const queue = new Queue({
     concurrency: 1,
@@ -30,7 +30,7 @@ router.patch('/video/:id', async (req, res) => {
     const videoId = req.params.id;
 
     try {
-        const updatedVideo = await Baserow.updateRow(Baserow.Tables.VIDEOS, videoId, req.body);
+        const updatedVideo = await Database.updateRow(Database.Tables.VIDEOS, videoId, req.body);
         res.json(updatedVideo);
 
     } catch (error) {
@@ -41,16 +41,15 @@ router.patch('/video/:id', async (req, res) => {
 
 router.get('/video/in-progress', async (req, res) => {
     try {
-        const videos = await Baserow.find(Baserow.Tables.VIDEOS, [
+        const result = await Database.videosWithScenes([
             {
                 field: 'Step',
                 value: 9,
                 type: 'not_equal'
             }
-        ], { orderBy: '-Step,-Timestamp' });
+        ]);
 
-        const withScenes = await joinScenes(videos);
-        res.json(withScenes);
+        res.json(result);
 
     } catch (error) {
         console.error('Error fetching in-progress videos:', error);
@@ -61,16 +60,14 @@ router.get('/video/in-progress', async (req, res) => {
 router.get('/video/completed', async (req, res) => {
     const { page, pageSize } = req.query;
     try {
-        const videos = await Baserow.find(Baserow.Tables.VIDEOS, [
+        const result = await Database.videosWithScenes([
             {
                 field: 'Step',
-                value: 9,
-                type: 'equal'
+                value: 9
             }
-        ], { orderBy: '-Timestamp' });
+        ], { page, pageSize });
 
-        const withScenes = await joinScenes(videos);
-        res.json(paginate(withScenes, page, pageSize));
+        res.json(result);
 
     } catch (error) {
         console.error('Error fetching completed videos:', error);
@@ -81,20 +78,9 @@ router.get('/video/completed', async (req, res) => {
 router.delete('/video/:videoId', async (req, res) => {
     const videoId = req.params.videoId;
     try {
-        await Baserow.deleteRow(Baserow.Tables.VIDEOS, videoId);
-
-        const scenes = await Baserow.find(Baserow.Tables.SCENES, [
-            {
-                field: 'Video ID',
-                value: videoId
-            }
-        ]);
-
-        if (scenes.length) {
-            const sceneIds = scenes.map(scene => scene.id);
-            await Baserow.deleteBatch(Baserow.Tables.SCENES, sceneIds);
-        }
+        await Database.deleteRow(Database.Tables.VIDEOS, videoId);
         res.end();
+
     } catch (error) {
         console.error('Error deleting video:', error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -106,13 +92,13 @@ router.patch('/image/prompt/:sceneId', async (req, res) => {
     const { prompt, videoId } = req.body;
 
     try {
-        await Baserow.updateRow(Baserow.Tables.SCENES, sceneId, {
+        await Database.updateRow(Database.Tables.SCENES, sceneId, {
             'Image Prompt': prompt,
             'Image URL': null,
             'Clip URL': null
         });
 
-        await Baserow.updateRow(Baserow.Tables.VIDEOS, videoId, {
+        await Database.updateRow(Database.Tables.VIDEOS, videoId, {
             Step: 3,
             Error: true,
             'Video Combined Clips URL': null,
@@ -130,7 +116,7 @@ router.patch('/image/prompt/:sceneId', async (req, res) => {
 
 router.get('/image/all', async (req, res) => {
     try {
-        const scenes = await Baserow.find(Baserow.Tables.SCENES, [
+        const scenes = await Database.find(Database.Tables.SCENES, [
             {
                 field: 'Image URL',
                 type: 'not_empty'
@@ -148,13 +134,13 @@ router.post('/image/delete', async (req, res) => {
     const { videoId, sceneId } = req.body;
 
     try {
-        await Baserow.updateRow(Baserow.Tables.SCENES, sceneId, {
+        await Database.updateRow(Database.Tables.SCENES, sceneId, {
             'Image URL': null,
             'Image Prompt': null,
             'Clip URL': null
         });
 
-        await Baserow.updateRow(Baserow.Tables.VIDEOS, videoId, {
+        await Database.updateRow(Database.Tables.VIDEOS, videoId, {
             Step: 3,
             Error: true,
             'Video Combined Clips URL': null,
@@ -172,7 +158,7 @@ router.post('/image/delete', async (req, res) => {
 
 router.get('/settings/caption-profiles', async (req, res) => {
     try {
-        const profiles = await Baserow.find(Baserow.Tables.CAPTION_PROFILES, [], { orderBy: 'profileName' });
+        const profiles = await Database.find(Database.Tables.CAPTION_PROFILES, [], { orderBy: 'profileName' });
         res.json(profiles);
 
     } catch (error) {
@@ -183,7 +169,7 @@ router.get('/settings/caption-profiles', async (req, res) => {
 
 router.post('/settings/caption-profiles', async (req, res) => {
     try {
-        const profile = await Baserow.createRow(Baserow.Tables.CAPTION_PROFILES, req.body);
+        const profile = await Database.createRow(Database.Tables.CAPTION_PROFILES, req.body);
         res.json(profile);
     } catch (error) {
         console.error('Error creating caption profile:', error);
@@ -194,7 +180,7 @@ router.post('/settings/caption-profiles', async (req, res) => {
 router.patch('/settings/caption-profiles/:id', async (req, res) => {
     const profileId = req.params.id;
     try {
-        const profile = await Baserow.updateRow(Baserow.Tables.CAPTION_PROFILES, profileId, req.body);
+        const profile = await Database.updateRow(Database.Tables.CAPTION_PROFILES, profileId, req.body);
         res.json(profile);
 
     } catch (error) {
@@ -202,21 +188,5 @@ router.patch('/settings/caption-profiles/:id', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
-function paginate(array, page, pageSize) {
-    return array.slice((page - 1) * pageSize, page * pageSize);
-}
-
-async function joinScenes(videos) {
-    for (const video of videos) {
-        video.scenes = await Baserow.find(Baserow.Tables.SCENES, [
-            {
-                field: 'Video ID',
-                value: video.id
-            }
-        ]);
-    }
-    return videos;
-}
 
 export default router;

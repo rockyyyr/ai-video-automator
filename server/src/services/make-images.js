@@ -1,11 +1,12 @@
 import * as ImageGenerator from '../lib/ImageGenerator.js';
-import * as Baserow from '../lib/Baserow.js';
+import * as Database from '../lib/Database.js';
 import * as MinIO from '../lib/MinIO.js';
 
-export default async function run(video) {
+export default async function run(video, startTime) {
     console.log('Generating images');
+    const start = startTime || Date.now();
 
-    const scenes = await Baserow.find(Baserow.Tables.SCENES, [
+    const scenes = await Database.find(Database.Tables.SCENES, [
         {
             field: 'Video ID',
             value: video.id
@@ -25,7 +26,7 @@ export default async function run(video) {
     await ImageGenerator.generateImages(scenes, async (scene, imageData) => {
         const url = await MinIO.saveFromBase64(`${Math.random()}-${video.uuid}-image-${scene['Segment #']}.jpeg`, imageData);
 
-        await Baserow.updateRow(Baserow.Tables.SCENES, scene.id, {
+        await Database.updateRow(Database.Tables.SCENES, scene.id, {
             'Image URL': url
         });
 
@@ -33,13 +34,16 @@ export default async function run(video) {
         count++;
     });
 
+
     if (count === scenes.length) {
-        return Baserow.updateRow(Baserow.Tables.VIDEOS, video.id, {
+        console.log('Generating images complete:', `${Math.abs((Date.now() - start) / 1000)}s`);
+
+        return Database.updateRow(Database.Tables.VIDEOS, video.id, {
             Step: 5
         });
 
     } else {
-        return run(video);
+        return run(video, start);
     }
 
 }

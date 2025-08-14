@@ -1,4 +1,5 @@
-import * as OpenRouter from './Openrouter.js';
+// import * as OpenRouter from './Openrouter.js';
+import * as ChatGPT from './ChatGPT.js';
 
 const TITLE = /(?<=\*\*Title:\*\*)[\S|\s|.]*?(?=\*\*)/g;
 const DESCRIPTION = /(?<=\*\*Description:\*\*)[\S|\s|.]*?(?=\*\*)/g;
@@ -42,12 +43,43 @@ Make sure the MainScript feels seamless and original, as if these insights are b
 `.trim();
 
 
+// function topicPrompt(userInput) {
+//     return `
+//         System:
+
+//         ${topicInstructions}
+
+//         User Input:
+
+//         Rough Duration: ${userInput.duration} seconds
+
+//         Topic: ${userInput.topic}
+
+//         ${userInput.notes ? `Notes: \n\n${userInput.notes}` : ''}
+//     `;
+// }
+
+// function transcriptPrompt(userInput) {
+//     return `
+//         System:
+
+//         ${transcriptInstructions}
+
+//         User Input:
+
+//         Rough Duration: ${userInput.duration} seconds
+
+//         Transcript: 
+
+//         ${userInput.transcript}
+
+//         ${userInput.notes ? `Notes: \n\n${userInput.notes}` : ''}
+//     `;
+// }
+
+
 function topicPrompt(userInput) {
     return `
-        System:
-
-        ${topicInstructions}
-
         User Input:
 
         Rough Duration: ${userInput.duration} seconds
@@ -58,12 +90,9 @@ function topicPrompt(userInput) {
     `;
 }
 
+
 function transcriptPrompt(userInput) {
     return `
-        System:
-
-        ${transcriptInstructions}
-
         User Input:
 
         Rough Duration: ${userInput.duration} seconds
@@ -110,8 +139,19 @@ function parseOutput(output) {
     };
 }
 
-async function generateScript(userInput, promptFunction) {
-    const response = await OpenRouter.createPrompt(promptFunction(userInput));
+// async function generateScript(userInput, promptFunction) {
+//     const response = await OpenRouter.createPrompt(promptFunction(userInput));
+//     const { title, description, script } = parseOutput(response);
+
+//     return {
+//         title,
+//         description,
+//         script
+//     };
+// }
+
+async function generateScript(prompt, instructions) {
+    const response = await ChatGPT.prompt(prompt, instructions);
     const { title, description, script } = parseOutput(response);
 
     return {
@@ -122,11 +162,11 @@ async function generateScript(userInput, promptFunction) {
 }
 
 export async function scriptFromTopic(userInput) {
-    return generateScript(userInput, topicPrompt);
+    return generateScript(topicPrompt(userInput), topicInstructions);
 }
 
 export async function scriptFromTranscript(userInput) {
-    return generateScript(userInput, transcriptPrompt);
+    return generateScript(transcriptPrompt(userInput), transcriptInstructions);
 }
 
 function roundTo(value, precision) {
