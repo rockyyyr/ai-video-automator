@@ -1,5 +1,6 @@
 import * as Video from '../lib/Video.js';
 import * as Database from '../lib/Database.js';
+import * as Minio from '../lib/MinIO.js';
 
 export default async function run(video) {
     console.log('Adding captions');
@@ -16,7 +17,8 @@ export default async function run(video) {
 
     const settings = captionProfile?.settings && JSON.parse(captionProfile.settings);
 
-    const url = await Video.addCaptions(video['Video With Audio URL'], settings, video['Replace Words']);
+    const tempUrl = await Video.addCaptions(video, settings, video['Replace Words']);
+    const url = await Minio.renameObject(tempUrl, video['Title'] + '.mp4');
 
     console.log('Adding captions complete:', `${Math.abs((Date.now() - start) / 1000)}s`);
 

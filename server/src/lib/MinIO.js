@@ -86,3 +86,46 @@ export function download(fileName, downloadPath) {
         downloadPath,
     );
 }
+
+export function removeBatch(fileNames) {
+    return minio.removeObjects(
+        MINIO_BUCKET_NAME,
+        fileNames
+    );
+}
+
+export function removeObject(fileName) {
+    return minio.removeObject(
+        MINIO_BUCKET_NAME,
+        fileName
+    );
+}
+
+export function copyObject(sourceFileName, destFileName) {
+    return minio.copyObject(
+        MINIO_BUCKET_NAME,
+        destFileName,
+        `/${MINIO_BUCKET_NAME}/${sourceFileName}`
+    );
+}
+
+export async function renameObject(sourceFileName, newFileName) {
+    const src = safeFileName(getFileName(sourceFileName));
+    const dest = safeFileName(getFileName(newFileName));
+
+    await copyObject(src, dest);
+    await removeObject(src);
+
+    return url(dest);
+}
+
+function safeFileName(str) {
+    return str
+        .trim()
+        .replace(/[^a-zA-Z0-9._-]/g, '_') // replace invalid chars with underscore
+        .replace(/_+/g, '_');
+}
+
+function getFileName(url) {
+    return url.split('/').pop();
+}

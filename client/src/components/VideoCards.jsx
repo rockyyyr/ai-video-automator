@@ -90,12 +90,12 @@ export default function VideoCards({ videos = [], className = '', replacementIma
                                 </button>
                             </div>
                             {/* <button
-                                    onClick={() => setSelectedVideo(video)}
-                                    className='outline '
-                                    style={{ height: 40, lineHeight: 0, color: 'orange', borderColor: 'orange' }}
-                                >
-                                    Edit
-                                </button> */}
+                                onClick={() => setSelectedVideo(video)}
+                                className='outline '
+                                style={{ height: 40, lineHeight: 0, color: 'orange', borderColor: 'orange' }}
+                            >
+                                Edit
+                            </button> */}
                         </div>
                         <div style={{ display: 'flex', gap: 20, justifyContent: 'space-between', padding: '0 30px' }}>
                             <Item label="Progress">

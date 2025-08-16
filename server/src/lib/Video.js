@@ -1,5 +1,6 @@
 const { NCATOOLKIT_URL, NCATOOLKIT_API_KEY } = process.env;
 import Axios from 'axios';
+import Queue from 'p-queue';
 
 const api = Axios.create({
     baseURL: `${NCATOOLKIT_URL}/v1`,
@@ -13,24 +14,36 @@ api.interceptors.response.use(
     error => Promise.reject(error)
 );
 
+const queue = new Queue({
+    concurrency: 3,
+    autoStart: true
+});
+
 export async function clipsFromImages(scenes, callback) {
     for (const scene of scenes) {
+        queue.add(async () => {
+            try {
+                const result = await api.post('/image/convert/video', {
+                    image_url: scene['Image URL'],
+                    length: parseFloat(scene.Duration),
+                    frame_rate: 25,
+                    zoom_speed: 3,
+                    id: `${scene.uuid}-${scene.id}`,
+                });
 
-        const result = await api.post('/image/convert/video', {
-            image_url: scene['Image URL'],
-            length: parseFloat(scene.Duration),
-            frame_rate: 25,
-            zoom_speed: 3,
-            id: `${scene.uuid}-${scene.id}`,
+                if (!result || result.message !== 'success') {
+                    throw new Error('Error generating clip:\n' + result.message);
+                }
+
+                const clipUrl = result.response;
+                await callback(scene, clipUrl);
+
+            } catch (error) {
+                console.error(`Failed to generate clip for scene ${scene['Segment #']}:`, error);
+            }
         });
-
-        if (!result || result.message !== 'success') {
-            throw new Error('Error generating clip:\n' + result.message);
-        }
-
-        const clipUrl = result.response;
-        await callback(scene, clipUrl);
     }
+    await queue.onIdle();
 }
 
 export async function combineClips(scenes, rowId) {
@@ -89,12 +102,12 @@ export async function compose({ videoUrl, audioUrl }) {
     return result?.response && result.response[0]?.file_url;
 }
 
-export async function addCaptions(videoUrl, settings, replace = false) {
+export async function addCaptions(video, settings) {
     let result;
 
     try {
         result = await api.post('/video/caption', {
-            video_url: videoUrl,
+            video_url: video['Video With Audio URL'],
             settings: settings || {
                 line_color: "#FFFFFF",
                 word_color: "#22b525",
@@ -111,7 +124,7 @@ export async function addCaptions(videoUrl, settings, replace = false) {
                 font_family: "The Bold Font",
                 position: "top_center",
             },
-            replace: replace ? JSON.parse(replace) : [],
+            replace: video['Replace Words'] ? JSON.parse(video['Replace Words']) : [],
             language: 'en',
             id: '/captioned-video'
         });

@@ -9,7 +9,7 @@
     },
     "scripts": {
         "start": "npm run migrate && node main.js",
-        "dev": "nodemon main.js",
+        "dev": "NODE_ENV=development nodemon main.js",
         "migrate": "dotenv -e .env -- knex migrate:latest --knexfile src/database/knexfile.js",
         "rollback": "dotenv -e .env -- knex migrate:rollback --knexfile src/database/knexfile.js"
     },

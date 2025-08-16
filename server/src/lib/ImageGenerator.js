@@ -11,7 +11,8 @@ const queue = new Queue({
 });
 
 async function generateImage(scene) {
-    const response = await clients[key++ % Keys.length].images.create({
+    const keyIndex = key++ % Keys.length;
+    const response = await clients[keyIndex].images.create({
         model: "black-forest-labs/FLUX.1-schnell-Free",
         prompt: scene['Image Prompt'],
         width: 576,
@@ -20,6 +21,10 @@ async function generateImage(scene) {
         n: 1,
         response_format: "base64"
     });
+
+    if (process.env.NODE_ENV === 'development') {
+        console.log(Keys[keyIndex]);
+    }
 
     return response.data[0].b64_json;
 }

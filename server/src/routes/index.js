@@ -2,6 +2,7 @@ import express from 'express';
 import Queue from 'p-queue';
 import * as Services from '../service-runner.js';
 import * as Database from '../lib/Database.js';
+import * as Minio from '../lib/MinIO.js';
 
 const queue = new Queue({
     concurrency: 1,
@@ -78,7 +79,28 @@ router.get('/video/completed', async (req, res) => {
 router.delete('/video/:videoId', async (req, res) => {
     const videoId = req.params.videoId;
     try {
+        const videoWithScenes = await Database.videosWithScenes([{ field: 'v.id', value: videoId }], { first: true });
+
+        let objectList = videoWithScenes.scenes.reduce((list, scene) => {
+            list.push(scene['Image URL'], scene['Clip URL']);
+            return list;
+        }, []);
+
+        objectList.push(
+            videoWithScenes['SRT URL'],
+            videoWithScenes['TTS URL'],
+            videoWithScenes['Video Combined Clips URL'],
+            videoWithScenes['Video With Audio URL'],
+            videoWithScenes['Video With Captions URL']
+        );
+
+        objectList = objectList
+            .filter(url => url)
+            .map(url => url.split('/').pop());
+
         await Database.deleteRow(Database.Tables.VIDEOS, videoId);
+        await Minio.removeBatch(objectList);
+
         res.end();
 
     } catch (error) {

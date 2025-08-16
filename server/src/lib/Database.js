@@ -80,7 +80,7 @@ export function deleteBatch(tableId, rowIds) {
         .del();
 }
 
-export function videosWithScenes(filters, { page, pageSize } = { page: 1, pageSize: 100 }) {
+export function videosWithScenes(filters, { page, pageSize, first } = { page: 1, pageSize: 100 }) {
     return db
         .select([
             'v.*',
@@ -100,7 +100,10 @@ export function videosWithScenes(filters, { page, pageSize } = { page: 1, pageSi
             { column: 'v.Timestamp', order: 'desc' }
         ])
         .limit(pageSize)
-        .offset((page - 1) * pageSize);
+        .offset((page - 1) * pageSize)
+        .modify(q => {
+            if (first) q.first();
+        });
 }
 
 export async function raw(query) {
